@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MyKitchen.Pages
 {
@@ -11,8 +12,10 @@ namespace MyKitchen.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+
+            return RedirectToPage("Customer/Home/Index");
 
         }
     }

@@ -1,10 +1,5 @@
 ﻿using MyKitchen.DataAccess.Data;
 using MyKitchen.DataAccess.Repositories.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyKitchen.DataAccess.Repositories
 {
@@ -29,7 +24,7 @@ namespace MyKitchen.DataAccess.Repositories
         }
         public void Save()
         {
-           _dbContext.SaveChanges();
+            _dbContext.SaveChanges();
         }
     }
 }

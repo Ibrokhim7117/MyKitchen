@@ -4,7 +4,7 @@ using MyKitchen.Models;
 
 namespace MyKitchen.DataAccess.Repositories
 {
-    #pragma warning disable
+#pragma warning disable
     public class MenuItemRepository : GenericRepository<MenuItem>, IMenuItemRepository
     {
         public readonly ApplicationDbContext _db;
@@ -22,7 +22,7 @@ namespace MyKitchen.DataAccess.Repositories
             objFromDb.CategoryId = obj.CategoryId;
             objFromDb.FoodTypeId = obj.FoodTypeId;
 
-            if(objFromDb.Image != null)
+            if (objFromDb.Image != null)
             {
                 objFromDb.Image = obj.Image;
             }

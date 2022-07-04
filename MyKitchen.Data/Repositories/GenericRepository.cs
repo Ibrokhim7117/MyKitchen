@@ -1,17 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyKitchen.DataAccess.Data;
 using MyKitchen.DataAccess.Repositories.IRepositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyKitchen.DataAccess.Repositories
 {
 #pragma warning disable
-    public class GenericRepository<T> : IGenericRepository<T> where T : class 
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly ApplicationDbContext _dbContext;
         internal DbSet<T> dbSet;
@@ -54,9 +49,9 @@ namespace MyKitchen.DataAccess.Repositories
         public T GetFirstOrDefault(Expression<Func<T, bool>>? predicate = null)
         {
             IQueryable<T> query = dbSet;
-            if(predicate != null)
+            if (predicate != null)
             {
-                query = query.Where(predicate); 
+                query = query.Where(predicate);
             }
 
             return query.FirstOrDefault();
@@ -64,12 +59,12 @@ namespace MyKitchen.DataAccess.Repositories
 
         public void Remove(T entity)
         {
-           dbSet.Remove(entity);
+            dbSet.Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<T> entities)
         {
-           dbSet.RemoveRange(entities);
+            dbSet.RemoveRange(entities);
         }
     }
 }
