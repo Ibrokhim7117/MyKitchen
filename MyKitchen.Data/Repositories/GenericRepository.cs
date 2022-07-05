@@ -46,14 +46,22 @@ namespace MyKitchen.DataAccess.Repositories
             return query.ToList();
         }
 
-        public T GetFirstOrDefault(Expression<Func<T, bool>>? predicate = null)
+        public T GetFirstOrDefault(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
-            if (predicate != null)
+            if (filter != null)
             {
-                query = query.Where(predicate);
+                query = query.Where(filter);
             }
-
+            if (includeProperties != null)
+            {
+                //abc,,xyz -> abc xyz
+                foreach (var includeProperty in includeProperties.Split(
+                    new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
             return query.FirstOrDefault();
         }
 
