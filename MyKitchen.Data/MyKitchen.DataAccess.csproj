@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyKitchen.Models\MyKitchen.Models.csproj" />
+    <ProjectReference Include="..\MyKitchen.Utility\MyKitchen.Utility.csproj" />
   </ItemGroup>
 
 </Project>

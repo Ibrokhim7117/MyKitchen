@@ -1,10 +1,9 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using MyKitchen.DataAccess.Data;
 using MyKitchen.DataAccess.Repositories;
 using MyKitchen.DataAccess.Repositories.IRepositories;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using MyKitchen.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,7 +35,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-app.UseAuthentication();;
+app.UseAuthentication(); ;
 
 app.UseAuthorization();
 

@@ -13,11 +13,12 @@ namespace MyKitchen.DataAccess.Repositories
             Category = new CategoryRepository(_dbContext);
             FoodType = new FoodTypeRepository(_dbContext);
             MenuItem = new MenuItemRepository(_dbContext);
+            ApplicationUser = new ApplicationUserRepository(_dbContext);
         }
         public ICategoryRepository Category { get; private set; }
         public IFoodTypeRepository FoodType { get; private set; }
         public IMenuItemRepository MenuItem { get; private set; }
-
+        public IApplicationUserRepository ApplicationUser { get; private set; }
         public void Dispose()
         {
             _dbContext.Dispose();

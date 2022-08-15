@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MyKitchen.DataAccess;
 using MyKitchen.DataAccess.Repositories.IRepositories;
 using MyKitchen.Models;
 
@@ -29,12 +28,13 @@ namespace MyKitchen.Pages.Admin.Categories
         {
             if (Category.Name == Category.DisplayOrder.ToString())
             {
+
                 ModelState.AddModelError("Category Name", "The DisplayOrder cannot exactly match the Name");
             }
             if (ModelState.IsValid)
             {
-                 _unitOfWork.Category.Add(Category);
-                 _unitOfWork.Save();
+                _unitOfWork.Category.Add(Category);
+                _unitOfWork.Save();
                 TempData["Success"] = "Category created successfully";
                 return RedirectToPage("Index");
             }

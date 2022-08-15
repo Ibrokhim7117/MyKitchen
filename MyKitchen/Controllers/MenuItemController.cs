@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyKitchen.DataAccess.Data;
 using MyKitchen.DataAccess.Repositories.IRepositories;
 
 namespace MyKitchen.Controllers
@@ -16,15 +15,30 @@ namespace MyKitchen.Controllers
             _unitOfWork = unitOfWork;
             _hostEnvironment = hostEnvironment;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
 
+
+        // this is taked items
         [HttpGet]
         public IActionResult Get()
         {
             var menuItemList = _unitOfWork.MenuItem.GetAll(includeProperties: "Category,FoodType");
             return Json(new { data = menuItemList });
         }
+        /// <summary>
+        ///  something
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// 
+
 
         [HttpDelete("{id}")]
+
+        // this is deleted product
         public IActionResult Delete(int id)
         {
             var objFromDb = _unitOfWork.MenuItem.GetFirstOrDefault(u => u.Id == id);

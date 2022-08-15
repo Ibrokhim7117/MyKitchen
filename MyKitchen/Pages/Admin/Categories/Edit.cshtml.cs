@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MyKitchen.DataAccess;
 using MyKitchen.DataAccess.Repositories.IRepositories;
 using MyKitchen.Models;
 
@@ -17,7 +16,7 @@ namespace MyKitchen.Pages.Admin.Categories
 
         public EditModel(IUnitOfWork unitOfWork)
         {
-           _unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
 
         }
         public void OnGet(int id)

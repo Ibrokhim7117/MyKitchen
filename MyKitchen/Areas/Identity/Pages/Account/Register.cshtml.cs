@@ -1,29 +1,20 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 using MyKitchen.Models;
 using MyKitchen.Utility;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Text.Encodings.Web;
 
 namespace MyKitchen.Areas.Identity.Pages.Account
 {
-#pragma warning  disable
+#pragma warning disable
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -99,23 +90,19 @@ namespace MyKitchen.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            /// 
-
-          
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-        
+
             [Required]
-            public string FirstName { get; set; }   
-            
+            public string FirstName { get; set; }
+
             [Required]
-            public string LastName { get; set; }    
-           
+            public string LastName { get; set; }
+
             [Required]
-            public string PhoneNumber { get; set; } 
-        
+            public string PhoneNumber { get; set; }
         }
 
 
@@ -135,23 +122,17 @@ namespace MyKitchen.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-               
-                user.FirstName = Input.FirstName;   
+                user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.PhoneNumber = Input.PhoneNumber;
+
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                if(!await _roleManager.RoleExistsAsync(SD.KitchenRole))
-                {
-                    _roleManager.CreateAsync(new IdentityRole(SD.KitchenRole)).GetAwaiter().GetResult();
-                    _roleManager.CreateAsync(new IdentityRole(SD.ManagerRole)).GetAwaiter().GetResult();
-                    _roleManager.CreateAsync(new IdentityRole(SD.FrontDeskRole)).GetAwaiter().GetResult();
-                    _roleManager.CreateAsync(new IdentityRole(SD.CustomerRole)).GetAwaiter().GetResult();
-                }
+
                 if (result.Succeeded)
                 {
                     string role = Request.Form["rdUserRole"].ToString();
-
-                    if(role == SD.KitchenRole)
+                    if (role == SD.KitchenRole)
                     {
                         await _userManager.AddToRoleAsync(user, SD.KitchenRole);
                     }
@@ -161,7 +142,17 @@ namespace MyKitchen.Areas.Identity.Pages.Account
                         {
                             await _userManager.AddToRoleAsync(user, SD.ManagerRole);
                         }
-
+                        else
+                        {
+                            if (role == SD.FrontDeskRole)
+                            {
+                                await _userManager.AddToRoleAsync(user, SD.FrontDeskRole);
+                            }
+                            else
+                            {
+                                await _userManager.AddToRoleAsync(user, SD.CustomerRole);
+                            }
+                        }
                     }
                     _logger.LogInformation("User created a new account with password.");
 
@@ -183,6 +174,11 @@ namespace MyKitchen.Areas.Identity.Pages.Account
                     }
                     else
                     {
+                        if (User.IsInRole(SD.ManagerRole))
+                        {
+                            TempData["success"] = "Employee registered successfully";
+                            return RedirectToPage("/Customer/Home/Index");
+                        }
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
