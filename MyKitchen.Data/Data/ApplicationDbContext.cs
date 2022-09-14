@@ -7,6 +7,7 @@ namespace MyKitchen.DataAccess.Data
 #pragma warning disable
     public class ApplicationDbContext : IdentityDbContext
     {
+        //slas
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
