@@ -12,8 +12,8 @@ using MyKitchen.DataAccess.Data;
 namespace MyKitchen.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220804153128_firstMigration")]
-    partial class firstMigration
+    [Migration("20220914061110_firstmigration")]
+    partial class firstmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

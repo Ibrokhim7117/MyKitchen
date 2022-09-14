@@ -7,6 +7,7 @@ using MyKitchen.Models;
 namespace MyKitchen.Pages.Admin.MenuItems;
 
 [BindProperties]
+#pragma warning disable
 public class UpsertModel : PageModel
 {
     private readonly IUnitOfWork _unitOfWork;
