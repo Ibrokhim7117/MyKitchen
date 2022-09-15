@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyKitchen.DataAccess.Repositories.IRepositories;
 using MyKitchen.Models;
@@ -15,15 +16,19 @@ namespace MyKitchen.Pages.Customer.Home
             _unitOfWork = unitOfWork;
 
         }
-        public MenuItem MenuItem { get; set; }
 
-        [Range(1, 100, ErrorMessage = "Please select a count between 1 and 100")]
+        [BindProperty]
+        public ShoppingCart ShoppingCart { get; set; }
 
-        public int Count { get; set; }
         public void OnGet(int id)
         {
-            MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(u => u.Id == id, includeProperties: "Category,FoodType");
+            ShoppingCart = new()
+            {
 
+                MenuItem = _unitOfWork.MenuItem.GetFirstOrDefault(u => u.Id == id, includeProperties: "Category,FoodType")
+            };
         }
+
     }
 }
+

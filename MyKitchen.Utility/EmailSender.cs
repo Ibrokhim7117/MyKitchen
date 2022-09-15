@@ -32,7 +32,7 @@ namespace MyKitchen.Utility
             //         }
 
             var client = new SendGridClient(SendGridSecret);
-            var from = new EmailAddress("dotnet@gmail.com", "MyKitchen");
+            var from = new EmailAddress("hello@dotnetmastery.com", "MyKitchen");
             var to = new EmailAddress(email);
             var msg = MailHelper.CreateSingleEmail(from, to, subject, "", htmlMessage);
 

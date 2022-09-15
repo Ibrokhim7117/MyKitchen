@@ -7,5 +7,6 @@
         IFoodTypeRepository FoodType { get; }
         IMenuItemRepository MenuItem { get; }
         IApplicationUserRepository ApplicationUser { get; }
+        IShoppingCartRepository ShoppingCart { get; }
     }
 }
