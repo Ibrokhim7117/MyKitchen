@@ -16,7 +16,6 @@ namespace MyKitchen.Models
         public int MenuItemId { get; set; }
 
         [ForeignKey("MenuItemId")]
-        [NotMapped]
         [ValidateNever]
         public MenuItem MenuItem { get; set; }  
 
@@ -25,7 +24,6 @@ namespace MyKitchen.Models
         public string ApplicationUserId { get; set; }
 
         [ForeignKey("ApplicationUserId")]
-        [NotMapped]
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }    
     }

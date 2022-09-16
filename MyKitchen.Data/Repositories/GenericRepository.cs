@@ -13,6 +13,8 @@ namespace MyKitchen.DataAccess.Repositories
         public GenericRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+            //FoodType Category
+            _dbContext.ShoppingCarts.Include(u => u.MenuItem).ThenInclude(u => u.Category);
             this.dbSet = dbContext.Set<T>();
         }
 
