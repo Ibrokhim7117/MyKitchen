@@ -1,4 +1,5 @@
-﻿namespace MyKitchen.DataAccess.Repositories.IRepositories
+﻿using System;
+namespace MyKitchen.DataAccess.Repositories.IRepositories
 {
     public interface IUnitOfWork : IDisposable
     {
