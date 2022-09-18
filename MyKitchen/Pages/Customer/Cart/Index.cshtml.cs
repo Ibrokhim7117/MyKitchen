@@ -8,7 +8,7 @@ using System.Security.Claims;
 namespace MyKitchen.Pages.Customer.Cart
 {
 #pragma warning disable
-    
+
     [Authorize]
     public class IndexModel : PageModel
     {
@@ -28,18 +28,18 @@ namespace MyKitchen.Pages.Customer.Cart
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            if(claim != null)
+            if (claim != null)
             {
                 ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(filter: u => u.ApplicationUserId == claim.Value,
                     includeProperties: "MenuItem,MenuItem.FoodType,MenuItem.Category");
-              
+
                 foreach (var cartItem in ShoppingCartList)
                 {
                     CartTotal += (cartItem.MenuItem.Price * cartItem.Count);
 
                 }
-            
-            }   
+
+            }
         }
 
         public IActionResult OnPostPlus(int cartId)
@@ -63,7 +63,7 @@ namespace MyKitchen.Pages.Customer.Cart
             {
                 _unitOfWork.ShoppingCart.DecrementCount(cart, 1);
             }
-        
+
             return RedirectToPage("/Customer/Cart/Index");
         }
 

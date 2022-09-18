@@ -1,5 +1,4 @@
-﻿using System;
-namespace MyKitchen.DataAccess.Repositories.IRepositories
+﻿namespace MyKitchen.DataAccess.Repositories.IRepositories
 {
     public interface IUnitOfWork : IDisposable
     {
@@ -9,5 +8,7 @@ namespace MyKitchen.DataAccess.Repositories.IRepositories
         IMenuItemRepository MenuItem { get; }
         IApplicationUserRepository ApplicationUser { get; }
         IShoppingCartRepository ShoppingCart { get; }
+        IOrderDetailRepository OrderDetail { get; }
+        IOrderHeaderRepository OrderHeader { get; }
     }
 }

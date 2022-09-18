@@ -1,6 +1,8 @@
 ﻿@page
+@using Microsoft.Extensions.Options
+@using MyKitchen.Utility
 @model MyKitchen.Pages.Customer.Cart.SummaryModel
-
+@inject IOptions<StripeSettings> Stripe
 
 <form method="post">
 	<br />

@@ -1,11 +1,6 @@
 ﻿using MyKitchen.DataAccess.Data;
 using MyKitchen.DataAccess.Repositories.IRepositories;
 using MyKitchen.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyKitchen.DataAccess.Repositories
 {
@@ -20,9 +15,9 @@ namespace MyKitchen.DataAccess.Repositories
 
         public int DecrementCount(ShoppingCart shoppingCart, int count)
         {
-           shoppingCart.Count -= count;
+            shoppingCart.Count -= count;
             _db.SaveChanges();
-           return shoppingCart.Count;
+            return shoppingCart.Count;
         }
 
         public int IncrementCount(ShoppingCart shoppingCart, int count)

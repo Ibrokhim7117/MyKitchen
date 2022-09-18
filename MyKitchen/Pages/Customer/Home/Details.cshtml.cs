@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyKitchen.DataAccess.Repositories.IRepositories;
 using MyKitchen.Models;
-using MyKitchen.Utility;
-using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace MyKitchen.Pages.Customer.Home
@@ -12,8 +10,8 @@ namespace MyKitchen.Pages.Customer.Home
 #pragma warning disable
 
     [Authorize]
- public class DetailsModel : PageModel
-   {
+    public class DetailsModel : PageModel
+    {
         private readonly IUnitOfWork _unitOfWork;
         public DetailsModel(IUnitOfWork unitOfWork)
         {
@@ -50,7 +48,7 @@ namespace MyKitchen.Pages.Customer.Home
 
                     _unitOfWork.ShoppingCart.Add(ShoppingCart);
                     _unitOfWork.Save();
-                   
+
                 }
                 else
                 {

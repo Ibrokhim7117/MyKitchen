@@ -1,12 +1,17 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyKitchen.DataAccess.Repositories.IRepositories;
 using MyKitchen.Models;
+using MyKitchen.Utility;
+using Stripe.Checkout;
 using System.Security.Claims;
 
 namespace MyKitchen.Pages.Customer.Cart
 {
+    [Authorize]
     [BindProperties]
+#pragma warning disable
     public class SummaryModel : PageModel
     {
         public IEnumerable<ShoppingCart> ShoppingCartList { get; set; }
@@ -124,5 +129,6 @@ namespace MyKitchen.Pages.Customer.Cart
 
             return Page();
         }
+
     }
 }
