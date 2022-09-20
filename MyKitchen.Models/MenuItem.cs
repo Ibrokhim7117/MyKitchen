@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyKitchen.Models
 {
+#pragma warning disable
     public class MenuItem
     {
         [Key]

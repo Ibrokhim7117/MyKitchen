@@ -43,90 +43,97 @@ namespace MyKitchen.Pages.Customer.Cart
 
         public IActionResult OnPost()
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            if (claim != null)
+            try
             {
-                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(filter: u => u.ApplicationUserId == claim.Value,
-                    includeProperties: "MenuItem,MenuItem.FoodType,MenuItem.Category");
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-                foreach (var cartItem in ShoppingCartList)
+                if (claim != null)
                 {
-                    OrderHeader.OrderTotal += (cartItem.MenuItem.Price * cartItem.Count);
-                }
+                    ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(filter: u => u.ApplicationUserId == claim.Value,
+                        includeProperties: "MenuItem,MenuItem.FoodType,MenuItem.Category");
 
-                OrderHeader.Status = SD.StatusPending;
-                OrderHeader.OrderDate = System.DateTime.Now;
-                OrderHeader.UserId = claim.Value;
-                OrderHeader.PickUpTime = Convert.ToDateTime(OrderHeader.PickUpDate.ToShortDateString() + " " +
-                    OrderHeader.PickUpTime.ToShortTimeString());
-                _unitOfWork.OrderHeader.Add(OrderHeader);
-                _unitOfWork.Save();
-
-                foreach (var item in ShoppingCartList)
-                {
-                    OrderDetails orderDetails = new()
+                    foreach (var cartItem in ShoppingCartList)
                     {
-                        MenuItemId = item.MenuItemId,
-                        OrderId = OrderHeader.Id,
-                        Name = item.MenuItem.Name,
-                        Price = item.MenuItem.Price,
-                        Count = item.Count
-                    };
-                    _unitOfWork.OrderDetail.Add(orderDetails);
+                        OrderHeader.OrderTotal += (cartItem.MenuItem.Price * cartItem.Count);
+                    }
 
-                }
+                    OrderHeader.Status = SD.StatusPending;
+                    OrderHeader.OrderDate = System.DateTime.Now;
+                    OrderHeader.UserId = claim.Value;
+                    OrderHeader.PickUpTime = Convert.ToDateTime(OrderHeader.PickUpDate.ToShortDateString() + " " +
+                        OrderHeader.PickUpTime.ToShortTimeString());
+                    _unitOfWork.OrderHeader.Add(OrderHeader);
+                    _unitOfWork.Save();
 
-                //_unitOfWork.ShoppingCart.RemoveRange(ShoppingCartList);
-                _unitOfWork.Save();
+                    foreach (var item in ShoppingCartList)
+                    {
+                        OrderDetails orderDetails = new()
+                        {
+                            MenuItemId = item.MenuItemId,
+                            OrderId = OrderHeader.Id,
+                            Name = item.MenuItem.Name,
+                            Price = item.MenuItem.Price,
+
+                            Count = item.Count
+                        };
+                        _unitOfWork.OrderDetail.Add(orderDetails);
+
+                    }
+
+                    //_unitOfWork.ShoppingCart.RemoveRange(ShoppingCartList);
+                    _unitOfWork.Save();
 
 
-                var domain = "https://localhost:44322/";
-                var options = new SessionCreateOptions
-                {
-                    LineItems = new List<SessionLineItemOptions>()
-                ,
-                    PaymentMethodTypes = new List<string>
+                    var domain = "https://localhost:44322/";
+                    var options = new SessionCreateOptions
+                    {
+                        LineItems = new List<SessionLineItemOptions>()
+                    ,
+                        PaymentMethodTypes = new List<string>
                 {
                   "card",
                 },
-                    Mode = "payment",
-                    SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={OrderHeader.Id}",
-                    CancelUrl = domain + "customer/cart/index",
-                };
-
-                //add line items
-                foreach (var item in ShoppingCartList)
-                {
-                    var sessionLineItem = new SessionLineItemOptions
-                    {
-                        PriceData = new SessionLineItemPriceDataOptions
-                        {
-                            //7.99->799
-                            UnitAmount = (long)(item.MenuItem.Price * 100),
-                            Currency = "usd",
-                            ProductData = new SessionLineItemPriceDataProductDataOptions
-                            {
-                                Name = item.MenuItem.Name
-                            },
-                        },
-                        Quantity = item.Count
+                        Mode = "payment",
+                        SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={OrderHeader.Id}",
+                        CancelUrl = domain + "customer/cart/index",
                     };
-                    options.LineItems.Add(sessionLineItem);
+
+                    //add line items
+                    foreach (var item in ShoppingCartList)
+                    {
+                        var sessionLineItem = new SessionLineItemOptions
+                        {
+                            PriceData = new SessionLineItemPriceDataOptions
+                            {
+                                //7.99->799
+                                UnitAmount = (long)(item.MenuItem.Price * 100),
+                                Currency = "usd",
+                                ProductData = new SessionLineItemPriceDataProductDataOptions
+                                {
+                                    Name = item.MenuItem.Name
+                                },
+                            },
+                            Quantity = item.Count
+                        };
+                        options.LineItems.Add(sessionLineItem);
+                    }
+
+
+
+                    var service = new SessionService();
+                    Session session = service.Create(options);
+                    Response.Headers.Add("Location", session.Url);
+
+                    OrderHeader.SessionId = session.Id;
+                    OrderHeader.PaymentIntentId = session.PaymentIntentId;
+                    _unitOfWork.Save();
+                    return new StatusCodeResult(303);
                 }
+            }catch(Exception ex)
+            {
 
-
-
-                var service = new SessionService();
-                Session session = service.Create(options);
-                Response.Headers.Add("Location", session.Url);
-
-                OrderHeader.SessionId = session.Id;
-                OrderHeader.PaymentIntentId = session.PaymentIntentId;
-                _unitOfWork.Save();
-                return new StatusCodeResult(303);
             }
-
             return Page();
         }
 
