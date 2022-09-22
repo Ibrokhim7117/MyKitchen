@@ -4,6 +4,7 @@ namespace MyKitchen.DataAccess.Repositories.IRepositories
 {
     public interface IOrderHeaderRepository : IGenericRepository<OrderHeader>
     {
-        void Update(OrderHeader orderHeader);
+        void Update(OrderHeader obj);
+        void UpdateStatus(int id, string status);
     }
 }
