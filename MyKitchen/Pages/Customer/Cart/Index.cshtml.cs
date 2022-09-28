@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyKitchen.DataAccess.Repositories.IRepositories;
 using MyKitchen.Models;
+using MyKitchen.Utility;
 using System.Security.Claims;
 
 namespace MyKitchen.Pages.Customer.Cart
@@ -55,9 +56,12 @@ namespace MyKitchen.Pages.Customer.Cart
             var cart = _unitOfWork.ShoppingCart.GetFirstOrDefault(u => u.Id == cartId);
             if (cart.Count == 1)
             {
+                var count = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
 
                 _unitOfWork.ShoppingCart.Remove(cart);
                 _unitOfWork.Save();
+                HttpContext.Session.SetInt32(SD.SessionCart, count);
+
             }
             else
             {
@@ -70,9 +74,13 @@ namespace MyKitchen.Pages.Customer.Cart
         public IActionResult OnPostRemove(int cartId)
         {
             var cart = _unitOfWork.ShoppingCart.GetFirstOrDefault(u => u.Id == cartId);
+
+          
+             var count =  _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
             _unitOfWork.ShoppingCart.Remove(cart);
 
             _unitOfWork.Save();
+            HttpContext.Session.SetInt32(SD.SessionCart, count);
             return RedirectToPage("/Customer/Cart/Index");
         }
     }

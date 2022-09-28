@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyKitchen.DataAccess.Repositories.IRepositories;
 using MyKitchen.Models;
+using MyKitchen.Utility;
 using System.Security.Claims;
 
 namespace MyKitchen.Pages.Customer.Home
@@ -48,7 +49,8 @@ namespace MyKitchen.Pages.Customer.Home
 
                     _unitOfWork.ShoppingCart.Add(ShoppingCart);
                     _unitOfWork.Save();
-
+                    HttpContext.Session.SetInt32(SD.SessionCart,
+                        _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == ShoppingCart.ApplicationUserId).ToList().Count);
                 }
                 else
                 {
