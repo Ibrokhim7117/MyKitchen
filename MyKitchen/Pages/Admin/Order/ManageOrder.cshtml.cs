@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyKitchen.DataAccess.Repositories.IRepositories;
@@ -9,10 +8,10 @@ using MyKitchen.Utility;
 namespace MyKitchen.Pages.Admin.Order
 {
 #pragma warning disable
-    
+
     public class ManageOrderModel : PageModel
     {
-       private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         public List<OrderDetailVM> OrderDetailVM { get; set; }
 
         public ManageOrderModel(IUnitOfWork unitOfWork)
@@ -26,7 +25,7 @@ namespace MyKitchen.Pages.Admin.Order
             List<OrderHeader> orderHeaders = _unitOfWork.OrderHeader.GetAll(u => u.Status == SD.StatusSubmitted ||
             u.Status == SD.StatusInProcess).ToList();
 
-            foreach(OrderHeader item in orderHeaders)
+            foreach (OrderHeader item in orderHeaders)
             {
                 OrderDetailVM individual = new OrderDetailVM()
                 {

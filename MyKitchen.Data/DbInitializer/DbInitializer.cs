@@ -1,6 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MyKitchen.DataAccess.Data;
 using MyKitchen.Models;
 using MyKitchen.Utility;
@@ -48,8 +46,8 @@ namespace MyKitchen.DataAccess.DbInitializer
                     UserName = "admin@dotnetmastery.com",
                     Email = "admin@dotnetmastery.com",
                     EmailConfirmed = true,
-                    FirstName = "Bhrugen",
-                    LastName = "Patel"
+                    FirstName = "Ibrohim",
+                    LastName = "Shomurodov"
                 }, "Admin123*").GetAwaiter().GetResult();
 
                 ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@dotnetmastery.com");

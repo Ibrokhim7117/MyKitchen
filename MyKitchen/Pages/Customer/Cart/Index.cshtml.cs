@@ -75,8 +75,8 @@ namespace MyKitchen.Pages.Customer.Cart
         {
             var cart = _unitOfWork.ShoppingCart.GetFirstOrDefault(u => u.Id == cartId);
 
-          
-             var count =  _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
+
+            var count = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
             _unitOfWork.ShoppingCart.Remove(cart);
 
             _unitOfWork.Save();

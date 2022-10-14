@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MyKitchen.Models
+﻿namespace MyKitchen.Models
 {
 #pragma warning disable
     public class Category

@@ -139,8 +139,8 @@ namespace MyKitchen.Areas.Identity.Pages.Account
                     {
                         Email = info.Principal.FindFirstValue(ClaimTypes.Email),
                         FirstName = info.Principal.FindFirstValue(ClaimTypes.Name).Split(' ')[0],
-                        LastName = info.Principal.FindFirstValue(ClaimTypes.Name).Split(' ')[1]    
-                       
+                        LastName = info.Principal.FindFirstValue(ClaimTypes.Name).Split(' ')[1]
+
                     };
                 }
                 return Page();
@@ -167,7 +167,7 @@ namespace MyKitchen.Areas.Identity.Pages.Account
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
                 user.PhoneNumber = Input.PhoneNumber;
-                
+
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

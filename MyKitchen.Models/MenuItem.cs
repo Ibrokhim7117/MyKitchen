@@ -1,8 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-
-namespace MyKitchen.Models
+﻿namespace MyKitchen.Models
 {
 #pragma warning disable
     public class MenuItem

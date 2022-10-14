@@ -21,9 +21,9 @@ namespace MyKitchen.Controllers
         [Authorize]
         public IActionResult Get(string? status = null)
         {
-            var OrderHeaderList = _unitOfWork.OrderHeader.GetAll(includeProperties:"ApplicationUser");
-            
-            if(status == "cancelled")
+            var OrderHeaderList = _unitOfWork.OrderHeader.GetAll(includeProperties: "ApplicationUser");
+
+            if (status == "cancelled")
             {
                 OrderHeaderList = OrderHeaderList.Where(u => u.Status == SD.StatusCancelled || u.Status == SD.StatusRejected);
             }
@@ -47,13 +47,13 @@ namespace MyKitchen.Controllers
                         }
                         else
                         {
-                                OrderHeaderList = OrderHeaderList.Where(u => u.Status == SD.StatusSubmitted || u.Status == SD.StatusInProcess);
-                          
+                            OrderHeaderList = OrderHeaderList.Where(u => u.Status == SD.StatusSubmitted || u.Status == SD.StatusInProcess);
+
                         }
                     }
                 }
             }
-            return Json(new {data = OrderHeaderList});
+            return Json(new { data = OrderHeaderList });
         }
     }
 }
