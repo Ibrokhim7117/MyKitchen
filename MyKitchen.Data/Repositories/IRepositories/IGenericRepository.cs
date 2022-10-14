@@ -1,4 +1,6 @@
-﻿namespace MyKitchen.DataAccess.Repositories.IRepositories
+﻿using System.Linq.Expressions;
+
+namespace MyKitchen.DataAccess.Repositories.IRepositories
 {
 #pragma warning disable
     public interface IGenericRepository<T> where T : class

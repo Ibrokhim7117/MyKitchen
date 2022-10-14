@@ -1,4 +1,6 @@
-﻿namespace MyKitchen.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MyKitchen.Models
 {
 #pragma warning disable
     public class FoodType
